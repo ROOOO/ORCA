@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class Global {
+    public static float PI = 3.1415926535f;
+
     public static int maxTimes = 10000;   // max update position times
 
     public static float t = 2.0f;
@@ -14,6 +16,7 @@ public class Global {
     }
     public static Vector2 rotate(Vector2 v, float theta)
     {
+        theta *= Global.PI;
         return new Vector2(Mathf.Cos(theta) * v.x - Mathf.Sin(theta) * v.y, Mathf.Sin(theta) * v.x + Mathf.Cos(theta) * v.y);
     }
 
