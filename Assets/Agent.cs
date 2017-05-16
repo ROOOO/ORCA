@@ -124,7 +124,8 @@ public class Agent : MonoBehaviour {
                 }
                 else
                 {
-                    edge = -Global.rotate(relativePos, mEdge / mRelativePos, -comRadius / mRelativePos);
+                    edge = Global.rotate(relativePos, mEdge / mRelativePos, -comRadius / mRelativePos);
+                    edge *= -1;
                 }
                 line.direction = edge.normalized;
                 u = Vector2.Dot(relativeVel, line.direction) * line.direction - relativeVel;
