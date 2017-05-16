@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class ORCA : MonoBehaviour {
 
     public static ORCA inst;
+    private int totalTimes = 0;
 
     List<Agent> agentList = new List<Agent>();
 
@@ -15,7 +16,7 @@ public class ORCA : MonoBehaviour {
         for (var i = 0; i < agentList.Count; ++i)
         {
             neighbor = agentList[i];
-            if (neighbor != agent)
+            if (neighbor != agent && neighbor.getRadius() - agent.getRadius() <= Global.maxNeighborRange)
             {
                 neighborsList.Add(agentList[i]);
             }
@@ -25,6 +26,11 @@ public class ORCA : MonoBehaviour {
     bool finished = false;
     bool isFinished()
     {
+        ++totalTimes;
+        if (totalTimes > Global.maxTimes)
+        {
+            return true;
+        }
         for (var i = 0; i < agentList.Count; ++i)
         {   
             if (!agentList[i].touchGoalPos())
@@ -32,7 +38,6 @@ public class ORCA : MonoBehaviour {
                 return false;
             }
         }
-        finished = true;
         return true;
     }
 
@@ -57,6 +62,7 @@ public class ORCA : MonoBehaviour {
             }
         }
         inst = this;
+	    totalTimes = 0;
 	}
 
 	// Update is called once per frame
@@ -68,6 +74,7 @@ public class ORCA : MonoBehaviour {
 	    if (isFinished())
         {
             Debug.Log("Finished!!");
+            finished = true;
             return;
         }
         updateAgents();

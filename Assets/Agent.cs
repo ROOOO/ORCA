@@ -40,7 +40,8 @@ public class Agent : MonoBehaviour {
 	    var goalVec = goalPos - initPos;
         maxVelocity = goalVec.magnitude / (Global.prefTimes * Global.stepTime);
         curPos = initPos;
-        radius = GetComponent<MeshRenderer>().bounds.extents.magnitude;
+        //radius = GetComponent<MeshRenderer>().bounds.extents.magnitude / 2.0f;
+	    radius = 0.7f;
         curVelocity = goalVec.normalized * maxVelocity;
 
         inited = true;
@@ -53,7 +54,19 @@ public class Agent : MonoBehaviour {
 
     Vector2 linearPrograming(List<Line> lines, Vector2 curV)
     {
-        //curV = maxVelocity * prefVelocity;
+        prefVelocity = maxVelocity * prefVelocity;
+
+        for (int i = 0; i < lines.Count; ++i)
+        {
+            if (Global.det(lines[i].direction, lines[i].point - curV) > 0)
+            {
+                curV = lines[i].point;
+            }
+            else
+            {
+                curV = prefVelocity;
+            }
+        }
 
         return curV;
     }
@@ -99,45 +112,25 @@ public class Agent : MonoBehaviour {
             {
                 Vector2 normVec = vec.normalized;
                 line.direction = new Vector2(normVec.y, -normVec.x);
-
-                var relCircleDis = mVec - comRadius / Global.t;
-                if (relCircleDis < 0)
-                {
-                    //curVelocity += normVec * (-relCircleDis) / 2;
-                    u = normVec * -relCircleDis;
-                    curVelocity += 0.5f * u;
-                }
-                else
-                {
-                    curVelocity = maxVelocity * prefVelocity;
-                }
+                u = normVec * (comRadius / Global.t - mVec);
             }
             else
             {
                 float mEdge = Mathf.Sqrt(Mathf.Pow(mRelativePos, 2) - Mathf.Pow(comRadius, 2));
-                float theta = Mathf.Asin(comRadius / mRelativePos);
                 Vector2 edge = Vector2.zero;
-                // right
-                if (Global.det(vec, relativePos) < 0)
-                {
-                    edge = -Global.rotate(relativePos, mEdge / mRelativePos, -comRadius / mRelativePos);
-                    Debug.Log(-(new Vector2(relativePos.x * mEdge + relativePos.y * comRadius, -relativePos.x * comRadius + relativePos.y * mEdge) / Mathf.Pow(mRelativePos, 2)).normalized);
-                    Debug.Log(edge.normalized);
-                    Debug.Log(Global.rotate(relativePos, -theta));
-                }
-                else
+                if (Global.det(relativePos, vec) > 0)
                 {
                     edge = Global.rotate(relativePos, mEdge / mRelativePos, comRadius / mRelativePos);
                 }
+                else
+                {
+                    edge = -Global.rotate(relativePos, mEdge / mRelativePos, -comRadius / mRelativePos);
+                }
                 line.direction = edge.normalized;
                 u = Vector2.Dot(relativeVel, line.direction) * line.direction - relativeVel;
-                curVelocity += 0.5f * u;
             }
 
-            //line.point = curVelocity + 0.5f * u;
-
-            //Debug.Log(curVelocity);
-
+            line.point = curVelocity + 0.5f * u;
             lines.Add(line);
         }
 
