@@ -52,23 +52,30 @@ public class Agent : MonoBehaviour {
         ORCA.inst.getNeighbor(this, neighborsList);
     }
 
-    Vector2 linearPrograming(List<Line> lines, Vector2 curV)
+    Vector2 linearPrograming(List<Line> lines)
     {
         prefVelocity = maxVelocity * prefVelocity;
+        Vector2 newV = prefVelocity;
 
         for (int i = 0; i < lines.Count; ++i)
         {
-            if (Global.det(lines[i].direction, lines[i].point - curV) > 0)
+            var line = lines[i];
+            var d = line.direction;
+            var p = line.point;
+            if (Global.det(d, p - curVelocity) > 0)
             {
-                curV = lines[i].point;
-            }
-            else
-            {
-                curV = prefVelocity;
+                var pq = Vector2.Dot(p, d);
+                if (p.sqrMagnitude - Mathf.Pow(pq, 2) > Mathf.Pow(maxVelocity, 2))
+                {
+                    newV = Vector2.zero; // todo: 3D Linear Programming
+                    break;
+                }
+
+                newV = lines[i].point;
             }
         }
 
-        return curV;
+        return newV;
     }
 
     void computeNewVelocity()
@@ -87,23 +94,6 @@ public class Agent : MonoBehaviour {
 
             Line line = new Line();
             Vector2 u = Vector2.zero;
-
-            //Vector2 vec = relativeVel - relativePos / Global.t;
-            //Vector2 normVec = vec.normalized;
-            //if (Vector2.Dot(vec, relativePos) < 0)
-            //{
-            //    var relCircleDis = vec.magnitude - comRadius / Global.t;
-            //    if (relCircleDis < 0)
-            //    {
-            //        curVelocity += normVec * (-relCircleDis) / 2;
-            //        line.direction = vec;
-            //        line.point = curVelocity + 0.5f * -relCircleDis * vec;
-            //    }
-            //    else
-            //    {
-            //        curVelocity = maxVelocity * prefVelocity;
-            //    }
-            //}
 
             Vector2 vec = relativeVel - relativePos / Global.t;
             var mVec = vec.magnitude;
@@ -135,7 +125,7 @@ public class Agent : MonoBehaviour {
             lines.Add(line);
         }
 
-        curVelocity = linearPrograming(lines, curVelocity);
+        curVelocity = linearPrograming(lines);
     }
     void setNewPos()
     {

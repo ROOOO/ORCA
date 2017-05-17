@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORCA.CSharp", "ORCA.CSharp.csproj", "{225A28C3-3261-6A83-BE5B-9F598E77671E}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORCA", "Assembly-CSharp.csproj", "{2B682F6D-0291-BB64-6843-D41968FCD817}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{225A28C3-3261-6A83-BE5B-9F598E77671E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{225A28C3-3261-6A83-BE5B-9F598E77671E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{225A28C3-3261-6A83-BE5B-9F598E77671E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{225A28C3-3261-6A83-BE5B-9F598E77671E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B682F6D-0291-BB64-6843-D41968FCD817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B682F6D-0291-BB64-6843-D41968FCD817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B682F6D-0291-BB64-6843-D41968FCD817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B682F6D-0291-BB64-6843-D41968FCD817}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal

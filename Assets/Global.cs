@@ -9,7 +9,7 @@ public class Global {
     public static float t = 2.0f;
     public static int prefTimes = 300;    // prefer to finish in update times as least prefTime
     public static float stepTime = 0.01f; // assume the delta time per update
-    public static float maxNeighborRange = 5.0f;
+    public static float maxNeighborRange = 3.0f;
 
     public static Vector2 rotate(Vector2 v, float cos, float sin)
     {
