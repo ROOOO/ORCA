@@ -4,7 +4,7 @@ using System.Collections;
 public class Global {
     public static int maxTimes = 10000;   // max update position times
 
-    public static float t = 2.0f;
+    public static float t = 6.0f;
     public static int prefTimes = 500;    // prefer to finish in update times as least prefTime
     public static float stepTime = 0.01f; // assume the delta time per update
     public static float maxNeighborRange = 5.0f;

@@ -102,7 +102,6 @@ public class Agent : MonoBehaviour {
                             newV = curVelocity;
                             return newV;
                         }
-                        // todo
                         continue;
                     }
 
@@ -190,6 +189,7 @@ public class Agent : MonoBehaviour {
                     u = Vector2.Dot(relativeVel, line.direction) * line.direction - relativeVel;
                 }
             }
+            // tricks
             else
             {
                 Vector2 vec = relativeVel - relativePos / Global.stepTime;
